@@ -60,7 +60,7 @@
      </div>
      <br />
      <div id="alert_message"></div>
-     <table id="user_data" class="table table-bordered table-striped">
+     <table id="user_data" class="table table-bordered">
        <thead>
         <tr>
          <th>Name</th>
