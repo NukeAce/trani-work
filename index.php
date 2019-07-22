@@ -53,7 +53,7 @@
   <div class="container box">
    <h1 align="center">trani</h1>
    <br />
-   <div class="table-responsive">
+   <div class="table table-responsive">
      <br />
      <div align="right">
        <button type="button" name="add" id="add" class="btn btn-info">Add</button>

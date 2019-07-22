@@ -1,6 +1,6 @@
 <?php
 //connects to the remote database and inserts data from the form to the database
-$connect = mysqli_connect("arfo8ynm6olw6vpn.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306", "jnedqzu7lwxtjyqb", "dt7zlrfkbkb2elqt", "ktz2xy30pbetn2h6");
+$connect = mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_NAME']);
 if(isset($_POST["name"], $_POST["description"], $_POST["account_number"], $_POST["bank_code"],  $_POST["amount"]))
 {
 $datapass= array('account_number' => $_POST["account_number"],'bank_code' =>$_POST["bank_code"]);
@@ -16,7 +16,7 @@ curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, 'GET');
 
 
 $headers1 = [
-  'Authorization: Bearer sk_test_ee6ffed0718d607063af1be81d911419bd4eb224',
+  'Authorization: Bearer ' . $_ENV['SECRET_KEY'],
   'Content-Type: application/json',
 
 ];
@@ -32,11 +32,6 @@ curl_close ($ch1);
   }
   $name1 = $userDetails->data->account_name;
   $account_number1 = $userDetails->data->account_number;
-
-
-
-
-
  $name = mysqli_real_escape_string($connect, $name1);
  $description = mysqli_real_escape_string($connect, $_POST["description"]);
  $account_number = mysqli_real_escape_string($connect, $account_number1);
@@ -51,10 +46,10 @@ $query2 = "SELECT type, name, description, account_number, bank_code, currency F
 //to perform the query on the database
 if(mysqli_query($connect, $query))
 {
-  echo 'Data Inserted';
+  echo 'Supplier saved';
 }
 else{
- echo "Cannot connect to Paystack. Check your connection";
+ die ("Cannot connect to Trani. Check your connection");
 }
 // a second query to get the details entered from the database and put in an array
 $result = mysqli_query($connect, $query2);
@@ -73,7 +68,7 @@ curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data_array));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 $headers = [
-  'Authorization: Bearer sk_test_ee6ffed0718d607063af1be81d911419bd4eb224',
+  'Authorization: Bearer ' . $_ENV['SECRET_KEY'],
   'Content-Type: application/json',
 
 ];
@@ -84,17 +79,16 @@ $request = curl_exec ($ch);
 curl_close ($ch);
 $extractname = json_decode($request);
 $bankname = $extractname->data->details->bank_name;
-$test = $bankname."8";
 $query3 = "UPDATE suppliers SET bank_code ='$bankname' WHERE bank_code='$bank_code'";
 if(mysqli_query($connect, $query3)){
-  echo " worked";
+  echo ".";
 }
 //creates a temp entry to get the response from the call to obtain the recepient code from the Paystack api
 $outfile = "list.json";
 if($request) { 
   if(file_put_contents($outfile, $request))
   {
-    echo " And Stored in the Database";
+    echo " ";
   }
   else
   {
