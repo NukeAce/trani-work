@@ -16,7 +16,7 @@ curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, 'GET');
 
 
 $headers1 = [
-  'Authorization: Bearer sk_test_ee6ffed0718d607063af1be81d911419bd4eb224',
+  $_ENV['SECRET_KEY'],
   'Content-Type: application/json',
 
 ];
@@ -68,7 +68,7 @@ curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data_array));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 $headers = [
-  'Authorization: Bearer sk_test_ee6ffed0718d607063af1be81d911419bd4eb224',
+  $_ENV['SECRET_KEY'],
   'Content-Type: application/json',
 
 ];

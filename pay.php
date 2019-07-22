@@ -41,7 +41,7 @@ if(isset($_POST["id"]))
 			curl_setopt($ch, CURLOPT_POST, 1);// type of call
 			//header
 			$headers = array();
-			$headers[] = 'Authorization: Bearer sk_test_ee6ffed0718d607063af1be81d911419bd4eb224';
+			$headers[] = $_ENV['SECRET_KEY'];
 			$headers[] = 'Content-Type: application/json';
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			//set the response to variable paid
@@ -78,7 +78,7 @@ if(isset($_POST["id"]))
 			curl_setopt($ch2, CURLOPT_POST, 1);
 
 			$headerss = array();
-			$headerss[] = 'Authorization: Bearer sk_test_ee6ffed0718d607063af1be81d911419bd4eb224';
+			$headerss[] = $_ENV['SECRET_KEY'];
 			$headerss[] = 'Content-Type: application/json';
 			curl_setopt($ch2, CURLOPT_HTTPHEADER, $headerss);
 
